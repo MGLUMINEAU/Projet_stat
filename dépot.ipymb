@@ -1,1 +1,45 @@
-hi
+ACM4 <- data %>%
+  filter(Quest=='A')%>%
+  select(Q03,Q35,Q27A,QA06J,QA06B)
+
+
+# API dans le mois, alcool dans le mois, cigarette dans le mois, situation à risque, boire + pour le même effet
+
+
+# Sélectionner aléatoirement 1000 observations si le jeu de données en contient plus
+set.seed(123) # Pour la reproductibilité
+if (nrow(ACM4) > 1000) {
+  ACM3 <- ACM4[sample(1:nrow(ACM4), 1000, replace = FALSE), ]
+}
+
+# Réaliser l'ACM
+acm_res <- MCA(ACM3, quali.sup = 1, graph = FALSE)
+
+# Résumé des résultats
+summary(acm_res)
+
+# Graphique des individus (coloré par sexe)
+fviz_mca_ind(acm_res,
+             label = "none",
+             habillage = "Q03",
+             palette = "jco",
+             addEllipses = TRUE)
+
+# Graphique des variables
+fviz_mca_var(acm_res, repel = TRUE)
+
+# Biplot (individus + variables)
+fviz_mca_biplot(acm_res,
+                repel = TRUE,
+                habillage = "Q03",
+                palette = "jco",
+                addEllipses = TRUE)
+
+# Contribution des variables aux axes
+fviz_contrib(acm_res, choice = "var", axes = 1, top = 10)
+fviz_contrib(acm_res, choice = "var", axes = 2, top = 10)
+
+acm_result <- MCA(ACP1, graph = FALSE)
+
+# Résumé des résultats
+summary(acm_result)
