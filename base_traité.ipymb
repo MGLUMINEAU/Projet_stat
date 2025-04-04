@@ -1,0 +1,531 @@
+df <- read.csv("LIEN BDD", sep = ";", header = TRUE, stringsAsFactors = FALSE)
+data <- df %>% select(Q03,
+                      Q04,
+                      Q05,
+                      Q06,
+                      Q07,
+                      Q26A1,
+                      Q26A2,
+                      Q26B1,
+                      Q26B2,
+                      Q26C1,
+                      Q26C2,
+                      Q26D1,
+                      Q26D2,
+                      Q26E1,
+                      Q26E2,
+                      Q27A,
+                      Q27B,
+                      Q28,
+                      Q29A,
+                      Q29B,
+                      Q30,
+                      Q31,
+                      Q32,
+                      Q33,
+                      Q33A,
+                      Q34,
+                      Q35,
+                      Q36,
+                      Q36A,
+                      Q37,
+                      Q38,
+                      Q38A,
+                      Q39,
+                      Q40B,
+                      Q42,
+                      Q43,
+                      Q43A,
+                      Q44A1,
+                      Q44A2,
+                      Q44A3,
+                      Q44B1,
+                      Q44B2,
+                      Q44B3,
+                      Q44F1,
+                      Q44F2,
+                      Q44F3,
+                      Q44I1,
+                      Q44I2,
+                      Q44I3,
+                      QA01A,
+                      QA01B,
+                      QA01C,
+                      QA01D,
+                      QA02,
+                      QA03,
+                      QA04A,
+                      QA04B,
+                      QA04C,
+                      QA04D,
+                      QA05,
+                      QA06B,
+                      QA06C,
+                      QA06D,
+                      QA06E, 
+                      QA06G, 
+                      QA06H,
+                      QA06J,
+                      QA06L, 
+                      QA07A, 
+                      QA07B,
+                      QA08A,
+                      QA08B,
+                      q15a, 
+                      q15b,
+                      Quest)
+
+data <- data %>%
+  mutate(Q03 = recode(Q03, `1` = "Homme", `2` = "Femme")) %>%
+  mutate(Q03 = ifelse(is.na(Q03), "Non renseigné", Q03)) %>%
+  filter(Q03 != "Non renseigné")
+
+data$Q03<-as.factor(data$Q03)
+
+
+data <- data %>%
+  mutate(Q04 = ifelse(is.na(Q04), "Non renseigné", Q04))
+
+data$Q04 <- factor(data$Q04, levels = c(1, 2, "Non renseigné"), 
+                     labels = c("Vous suivez des études", "Vous avez arrêté vos études", "Non renseigné"))
+
+
+data$Q05 <- factor(data$Q05, levels = c(1, 2,3, 4, 5, "Non renseigné"), 
+                     labels = c("Collégien(ne)", "Lycéen(ne) en filière générale ou technologique","Lycéen(ne) en filière professionnelle (Bac Pro, BEP, CAP)", "En apprentissage", "Étudiant(e) de l’enseignement supérieur (Université, IUT, BTS, prépa…)
+", "Non renseigné"))
+
+data <- data %>%
+  mutate(Q06 = ifelse(is.na(Q06), "Non renseigné", Q06))
+
+data$Q06 <- factor(data$Q06, levels = c(1, 2, 3, 4, "Non renseigné"), 
+                     labels = c("Sans activité", "En recherche d’emploi", "En insertion (contrat aidé, école de la 2ème chance, centre EPIDE…)", "En emploi (hors apprentissage)", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(Q07 = ifelse(is.na(Q07), "Non renseigné", Q07))
+
+data$Q07 <- factor(data$Q07, levels = c(1, 2, "Non renseigné"), 
+                     labels = c("Non", "Oui", "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(Q26A1 = ifelse(is.na(Q26A1), "Non renseigné", Q26A1))
+
+data$Q26A1 <- factor(data$Q26A1, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+
+
+data <- data %>%
+  mutate(Q26B1 = ifelse(is.na(Q26B1), "Non renseigné", Q26B1))
+
+
+data$Q26B1 <- factor(data$Q26B1, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(Q26C1 = ifelse(is.na(Q26C1), "Non renseigné", Q26C1))
+
+data$Q26C1 <- factor(data$Q26C1, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(Q26D1 = ifelse(is.na(Q26D1), "Non renseigné", Q26D1))
+
+data$Q26D1 <- factor(data$Q26D1, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(Q26E1 = ifelse(is.na(Q26E1), "Non renseigné", Q26E1))
+
+data$Q26E1 <- factor(data$Q26E1, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+
+
+
+data <- data %>%
+  mutate(Q27A = ifelse(is.na(Q27A), "Non renseigné", Q27A))
+
+data$Q27A <- factor(data$Q27A, levels = c(1, 2, 3, 4, 5, 6, 7, "Non renseigné"), 
+                     labels = c("Aucune","Moins d’une par semaine",
+                                "Moins d’une par jour","Entre 1-5 par jour",
+                                "Entre 6-10 par jour","Entre 11-20 par jour",
+                                "Plus de 20 par jour", "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(Q28 = ifelse(is.na(Q28), "Non renseigné", Q28))
+
+data$Q28 <- factor(data$Q28, levels = c(1,2,3,4, 5,6 ,7, "Non renseigné"),
+                   labels= c("0 fois", "1-2 fois", "3-5 fois", "6-9 fois",
+                             "10-19 fois", "20-29 fois","30 fois ou plus", "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(Q29A = ifelse(is.na(Q29A), "Non renseigné", Q29A))
+
+data$Q29A <- factor(data$Q29A,  levels= c(1,2,3, "Non renseigné"),
+                     labels =c( "Non",  "Oui, mais pas tous les jours", 
+                                "Oui, tous les jours", "Non renseigné")) 
+
+
+data <- data %>%
+  mutate(Q30 = ifelse(is.na(Q30), "Non renseigné", Q30))
+
+data$Q30 <- factor(data$Q30, levels= c(1, 2, 3, 4, "Non renseigné"), 
+                   labels =c( "Non concerné(e)", "Non", "Oui",
+                              "Je ne sais pas", "Non renseigné")) 
+
+data <- data %>%
+  mutate(Q31 = ifelse(is.na(Q31), "Non renseigné", Q31))
+
+data$Q31 <- factor(data$Q31, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Une cigarette de tabac en premier",
+                                "La cigarette électronique en premier",
+                                "Non concerné(e)", "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(Q32 = ifelse(is.na(Q32), "Non renseigné", Q32))
+
+data$Q32 <- factor(data$Q32, levels= c(1, 2, 3, "Non renseigné"), 
+                   labels = c( "Non", "Oui, on me l’a offerte/donnée", 
+                               "Oui, je l’ai achetée moi-même", "Non renseigné")) 
+
+
+data <- data %>%
+  mutate(Q33 = ifelse(is.na(Q33), "Non renseigné", Q33))
+
+data$Q33 <- factor( data$Q33, levels= c(1, 2, "Non renseigné"),
+                   labels = c( "Non",  "Oui", "Non renseigné")) 
+
+
+data<-data%>%
+  mutate(Q34 = ifelse(is.na(Q34), "Non renseigné", Q34))
+
+data$Q34 <- factor(data$Q34, levels = c(1, 2, 3, 4, 5, 6, 7, 8, "Non renseigné"), 
+                     labels = c("0 fois"," Moins d’une fois par mois", 
+                                "Une fois par mois", "2-3 fois par mois",
+                                "Une fois par semaine","2-3 fois par semaine",
+                                "4 fois par semaine ou plus",
+                                "Tous les jours ou presque", "Non renseigné"))
+ 
+
+
+
+data <- data %>%
+  mutate(Q35 = ifelse(is.na(Q35), "Non renseigné", Q35))
+
+
+data$Q35 <- factor(data$Q35, levels = c(1, 2, 3,4,5,6,7, "Non renseigné"), 
+                       labels = c("0 fois","1-2 fois","3-5 fois","6-9 fois",
+                                  "10-19 fois","20-29 fois","30 fois ou plus", "Non renseigné"))
+
+
+
+
+data <- data %>%
+  mutate(Q36 = ifelse(is.na(Q36), "Non renseigné", Q36))
+
+data$Q36 <- factor( data$Q36, levels= c(1, 2, "Non renseigné"),
+                   labels = c( "Non",  "Oui", "Non renseigné")) 
+
+
+
+data <- data %>%
+  mutate(Q37 = ifelse(is.na(Q37), "Non renseigné", Q37))
+
+data$Q37 <- factor(data$Q37, levels = c(1, 2, 3, 4, 5, 6, 7, "Non renseigné"), 
+                      labels = c("0 fois","1-2 fois", "3-5 fois","6-9 fois",
+                                 "10-19 fois", "20-29 fois", "30 fois ou plus", "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(Q38 = ifelse(is.na(Q38), "Non renseigné", Q38))
+
+data$Q38 <- factor( data$Q38, levels= c(1, 2, "Non renseigné"),
+                   labels = c( "Non",  "Oui", "Non renseigné")) 
+
+
+
+data <- data %>%
+  mutate(Q39 = ifelse(is.na(Q39), "Non renseigné", Q39))
+
+data$Q39 <- factor(data$Q39, levels = c(1, 2, 3,4, 5, "Non renseigné"), 
+                       labels = c("0 fois","1-2 fois","3-5 fois","6-9 fois",
+                                  "10-19 fois", "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(Q40B = ifelse(is.na(Q40B), "Non renseigné", Q40B))
+
+data$Q40B<-factor(data$Q40B, levels =c(1,2,3,4,5,"Non renseigné"), 
+                  labels= c( "Jamais",  "Rarement", "De temps en temps",
+                             "Assez souvent", "Très souvent","Non renseigné" ))
+
+
+data <- data %>%
+  mutate(Q42 = ifelse(is.na(Q42), "Non renseigné", Q42))
+
+data$Q42 <- factor(data$Q42, levels = c(1, 2, 3,4,5,6,7, "Non renseigné"), 
+                       labels = c("0 fois","1-2 fois","3-5 fois","6-9 fois",
+                                  "10-19 fois","20-29 fois","30 fois ou plus", "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(Q43 = ifelse(is.na(Q43), "Non renseigné", Q43))
+
+data$Q43 <- factor( data$Q43, levels= c(1, 2, "Non renseigné"),
+                   labels = c( "Non",  "Oui", "Non renseigné")) 
+
+
+
+data <- data %>%
+  mutate(Q43A = ifelse(is.na(Q43A), "Non renseigné", Q43A))
+
+data$Q43A <- factor(data$Q43A, levels = c(1, 2, 3,4,5, "Non renseigné"), 
+                       labels = c("0 fois","1-2 fois","3-5 fois","6-9 fois",
+                                  "10fois ou plus", "Non renseigné"))
+
+
+
+
+data <- data %>%
+  mutate(Q44A1 = ifelse(is.na(Q44A1), "Non renseigné", Q44A1))
+
+data$Q44A1 <- factor(data$Q44A1, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+
+
+data <- data %>%
+  mutate(Q44A3 = ifelse(is.na(Q44A3), "Non renseigné", Q44A3))
+
+
+data$Q44A3 <- factor( data$Q44A3, levels= c(1, 2, "Non renseigné"),
+                   labels = c( "Non",  "Oui", "Non renseigné")) 
+
+
+data <- data %>%
+  mutate(Q44B1 = ifelse(is.na(Q44B1), "Non renseigné", Q44B1))
+
+data$Q44B1 <- factor(data$Q44B1, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(Q44B3 = ifelse(is.na(Q44B3), "Non renseigné", Q44B3))
+
+data$Q44B3 <- factor( data$Q44B3, levels= c(1, 2, "Non renseigné"),
+                   labels = c( "Non",  "Oui", "Non renseigné")) 
+
+data <- data %>%
+  mutate(Q44F1 = ifelse(is.na(Q44F1), "Non renseigné", Q44F1))
+
+data$Q44F1 <- factor(data$Q44F1, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(Q44F3 = ifelse(is.na(Q44F3), "Non renseigné", Q44F3))
+
+
+data$Q44F3 <- factor( data$Q44F3, levels= c(1, 2, "Non renseigné"),
+                   labels = c( "Non",  "Oui", "Non renseigné")) 
+
+
+data <- data %>%
+  mutate(Q44I1 = ifelse(is.na(Q44I1), "Non renseigné", Q44I1))
+
+data$Q44I1 <- factor(data$Q44I1, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(Q44I3 = ifelse(is.na(Q44I3), "Non renseigné", Q44I3))
+
+
+data$Q44I3 <- factor( data$Q44I3, levels= c(1, 2, "Non renseigné"),
+                   labels = c( "Non",  "Oui", "Non renseigné")) 
+
+
+data <- data %>%
+  mutate(QA01A = ifelse(is.na(QA01A), "Non renseigné", QA01A))
+
+data$QA01A <- factor(data$QA01A, levels = c(1, 2, 3,4,5, "Non renseigné"), 
+                       labels = c("0 fois","1-2 fois","3-5 fois","6-9 fois",
+                                  "10 fois ou plus", "Non renseigné"))
+
+data <- data %>%
+  mutate(QA01B = ifelse(is.na(QA01B), "Non renseigné", QA01B))
+
+data$QA01B <- factor(data$QA01B, levels = c(1, 2, 3,4,5, "Non renseigné"), 
+                       labels = c("0 fois","1-2 fois","3-5 fois","6-9 fois",
+                                  "10 fois ou plus", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(QA01C = ifelse(is.na(QA01C), "Non renseigné", QA01C))
+
+data$QA01C <- factor(data$QA01C, levels = c(1, 2, 3,4,5, "Non renseigné"), 
+                       labels = c("0 fois","1-2 fois","3-5 fois","6-9 fois",
+                                  "10 fois ou plus", "Non renseigné"))
+
+data <- data %>%
+  mutate(QA01D = ifelse(is.na(QA01D), "Non renseigné", QA01D))
+
+data$QA01D <- factor(data$QA01D, levels = c(1, 2, 3,4,5, "Non renseigné"), 
+                       labels = c("0 fois","1-2 fois","3-5 fois","6-9 fois",
+                                  "10 fois ou plus", "Non renseigné"))
+
+
+data <-data %>%
+  mutate(QA02 = ifelse(is.na(QA02), "Non renseigné", QA02))
+
+data$QA02 <- factor(data$QA02, levels = c(1,2,3,4, "Non renseigné"),
+                    labels = c("Ça m’est arrivé plusieurs fois","Ça m’est arrivé une fois", 
+                    "Ça m’est arrivé mais pas au cours des 30 derniers jours","Ça ne m’est jamais arrivé",
+                    "Non renseigné"))
+
+data <-data %>%
+  mutate(QA04A = ifelse(is.na(QA04A), "Non renseigné", QA04A))
+
+
+
+data$QA04A <- factor(data$QA04A, levels = c(1, 2, "Non renseigné"), 
+                     labels = c("Non choisi","choisi", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(QA04B = ifelse(is.na(QA04B), "Non renseigné", QA04B))
+
+data$QA04B <- factor(data$QA04B, levels = c(1, 2, "Non renseigné"), 
+                     labels = c("Non choisi","choisi", "Non renseigné"))
+
+data <- data %>%
+  mutate(QA04C = ifelse(is.na(QA04C), "Non renseigné", QA04C))
+
+data$QA04C <- factor(data$QA04C, levels = c(1, 2, "Non renseigné"), 
+                     labels = c("Non choisi","choisi", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(QA04D = ifelse(is.na(QA04D), "Non renseigné", QA04D))
+
+data$QA04D <- factor(data$QA04D, levels = c(1, 2, "Non renseigné"), 
+                     labels = c("Non choisi","choisi", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(QA06B = ifelse(is.na(QA06B), "Non renseigné", QA06B))
+
+data$QA06B <- factor(data$QA06B, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Non, jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(QA06C = ifelse(is.na(QA06C), "Non renseigné", QA06C))
+
+data$QA06C <- factor(data$QA06C, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Non, jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+data <- data %>%
+  mutate(QA06D = ifelse(is.na(QA06D), "Non renseigné", QA06D))
+
+data$QA06D <- factor(data$QA06D, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Non, jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(QA06E = ifelse(is.na(QA06E), "Non renseigné", QA06E))
+
+data$QA06E <- factor(data$QA06E, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Non, jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(QA06G = ifelse(is.na(QA06G), "Non renseigné", QA06G))
+
+data$QA06G <- factor(data$QA06G, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Non, jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+data <- data %>%
+  mutate(QA06H = ifelse(is.na(QA06H), "Non renseigné", QA06H))
+
+data$QA06H <- factor(data$QA06H, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Non, jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+data <- data %>%
+  mutate(QA06J = ifelse(is.na(QA06J), "Non renseigné", QA06J))
+
+data$QA06J <- factor(data$QA06J, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Non, jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+data <- data %>%
+  mutate(QA06L = ifelse(is.na(QA06L), "Non renseigné", QA06L))
+
+data$QA06L <- factor(data$QA06L, levels = c(1, 2, 3, "Non renseigné"), 
+                     labels = c("Non, jamais","Oui, une fois","Oui, plusieurs fois", "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(QA07A = ifelse(is.na(QA07A), "Non renseigné", QA07A))
+
+data$QA07A <- factor(data$QA07A, levels = c(1, 2, 3, 4, 5, 6, "Non renseigné"), 
+                     labels = c("Jamais","Oui, rarement","Oui, parfois", "Oui, souvent", "Oui, tous les jours", "Non concerné(e)", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(QA07B = ifelse(is.na(QA07B), "Non renseigné", QA07B))
+
+data$QA07B <- factor(data$QA07B, levels = c(1, 2, 3, 4, 5, 6, "Non renseigné"), 
+                     labels = c("Jamais","Oui, rarement","Oui, parfois", "Oui, souvent", "Oui, tous les jours", "Non concerné(e)", "Non renseigné"))
+
+data <- data %>%
+  mutate(QA08A = ifelse(is.na(QA08A), "Non renseigné", QA08A))
+
+data$QA08A <- factor(data$QA08A, levels = c(1, 2, 3, 4, "Non renseigné"), 
+                     labels = c("Non","Oui, parfois",  "Oui, tous les jours", "Non concerné(e)", "Non renseigné"))
+
+
+data <- data %>%
+  mutate(QA08B = ifelse(is.na(QA08B), "Non renseigné", QA08B))
+
+data$QA08B <- factor(data$QA08B, levels = c(1, 2, 3, 4, "Non renseigné"), 
+                     labels = c("Non","Oui, parfois",  "Oui, tous les jours", "Non concerné(e)", "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(q15a = ifelse(is.na(q15a), "Non renseigné", q15a))
+
+data$q15a <- factor(data$q15a, levels = c(1, 2, 3, 4, 5, 6, 7, 8, 9, "Non renseigné"), 
+                     labels = c("Agriculteur exploitant", "Artisan, commerçant,chef d’entreprise de moins de 10 salariés",
+                                "Chef d’entreprise de 10 salariés ou plus", "Cadre, professeur (collège, lycée, fac), chercheur, ingénieur, profession libérale (médecin, avocat…)", "Profession intermédiaire, technicien (instituteur, professeur des écoles, infirmier…)", "Employé (secrétaire, standardiste, aide-comptable, vendeur, serveur de bar ou restaurant, caissier…)", "Ouvrier (en usine ou chez un artisan: ouvrier agricole, plombier, électricien, boucher, coiffeur, routier…)", "Sans profession", "Je ne sais pas" , "Non renseigné"))
+
+
+
+data <- data %>%
+  mutate(q15b = ifelse(is.na(q15b), "Non renseigné", q15b))
+
+data$q15b <- factor(data$q15b, levels = c(1, 2, 3, 4, 5, 6, 7, 8, 9, "Non renseigné"), 
+                     labels = c("Agriculteur exploitant", "Artisan, commerçant,chef d’entreprise de moins de 10 salariés",
+                                "Chef d’entreprise de 10 salariés ou plus", "Cadre, professeur (collège, lycée, fac), chercheur, ingénieur, profession libérale (médecin, avocat…)", "Profession intermédiaire, technicien (instituteur, professeur des écoles, infirmier…)", "Employé (secrétaire, standardiste, aide-comptable, vendeur, serveur de bar ou restaurant, caissier…)", "Ouvrier (en usine ou chez un artisan: ouvrier agricole, plombier, électricien, boucher, coiffeur, routier…)", "Sans profession", "Je ne sais pas" , "Non renseigné"))
