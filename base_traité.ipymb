@@ -529,3 +529,26 @@ data <- data %>%
 data$q15b <- factor(data$q15b, levels = c(1, 2, 3, 4, 5, 6, 7, 8, 9, "Non renseigné"), 
                      labels = c("Agriculteur exploitant", "Artisan, commerçant,chef d’entreprise de moins de 10 salariés",
                                 "Chef d’entreprise de 10 salariés ou plus", "Cadre, professeur (collège, lycée, fac), chercheur, ingénieur, profession libérale (médecin, avocat…)", "Profession intermédiaire, technicien (instituteur, professeur des écoles, infirmier…)", "Employé (secrétaire, standardiste, aide-comptable, vendeur, serveur de bar ou restaurant, caissier…)", "Ouvrier (en usine ou chez un artisan: ouvrier agricole, plombier, électricien, boucher, coiffeur, routier…)", "Sans profession", "Je ne sais pas" , "Non renseigné"))
+
+
+replace_outliers_with_na <- function(x) {
+  Q1 <- quantile(x, 0.25, na.rm = TRUE)
+  Q3 <- quantile(x, 0.75, na.rm = TRUE)
+  IQR_value <- IQR(x, na.rm = TRUE)
+  
+  # Limites inférieure et supérieure
+  lower_limit <- Q1 - 1.5 * IQR_value
+  upper_limit <- Q3 + 1.5 * IQR_value
+  
+  # Remplacer les valeurs extrêmes par NA
+  x[x < lower_limit | x > upper_limit] <- NA
+  return(x)
+}
+
+
+data_quantitative <- data %>%
+  select(where(is.numeric)) %>%  # Utilisation de `select(where(is.numeric))`
+  mutate_all(replace_outliers_with_na)
+
+# Remplacer les colonnes quantitatives de votre jeu de données original
+data <- bind_cols(data %>% select(-where(is.numeric)), data_quantitative)
