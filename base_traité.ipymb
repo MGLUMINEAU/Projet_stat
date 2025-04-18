@@ -552,3 +552,38 @@ data_quantitative <- data %>%
 
 # Remplacer les colonnes quantitatives de votre jeu de données original
 data <- bind_cols(data %>% select(-where(is.numeric)), data_quantitative)
+
+
+
+################### variables ajoutées à la bdd#####################
+
+# 1. Conversion des colonnes en caractères
+data_clean <- data %>%
+  mutate(
+    Q26A1 = as.character(Q26A1),
+    Q26B1 = as.character(Q26B1)
+  )
+
+# 2. Création des nouvelles variables
+data_plus_VAR <- data_clean %>%
+  mutate(
+    cigarette = case_when(
+      Q26A1 %in% c("Oui, une fois", "Oui, plusieurs fois") |
+      Q26B1 %in% c("Oui, une fois", "Oui, plusieurs fois") ~ "Oui",
+      Q26A1 == "Jamais" & Q26B1 == "Jamais" ~ "Non",
+      TRUE ~ "Non renseigné"
+    ),
+    cigarette = factor(cigarette, levels = c("Oui", "Non", "Non renseigné")),
+    
+    age_min_cigarette = pmin(Q26A2, Q26B2, na.rm = TRUE),
+    age_min_cigarette = ifelse(is.infinite(age_min_cigarette), NA, age_min_cigarette),
+    
+    drogues_dures = case_when(
+      Q44A1 %in% c("Oui, une fois", "Oui, plusieurs fois") |
+      Q44F1 %in% c("Oui, une fois", "Oui, plusieurs fois") |
+      Q44I1 %in% c("Oui, une fois", "Oui, plusieurs fois") ~ "Oui",
+      Q44A1 == "Jamais" & Q44F1 == "Jamais" & Q44I1 == "Jamais" ~ "Non",
+      TRUE ~ "Non renseigné"
+    ),
+    drogues_dures = factor(drogues_dures, levels = c("Oui", "Non", "Non renseigné"))
+  )
