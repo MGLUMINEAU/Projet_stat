@@ -1,0 +1,38 @@
+data_univar<-data_plus_VAR %>% select(Q03,
+                             Q33,
+                             Q26A1,
+                             Q26B1,
+                             Q26E1,
+                             Q38, 
+                             Q44A1,
+                             Q44B1,
+                             Q44F1,
+                             Q44I1,
+                             age_min_cigarette, 
+                             cigarette,
+                             drogues_dures)
+
+
+cat_vars <- c("Q33", "Q26A1", "Q26B1", "Q26E1", "Q38", "Q44A1", "Q44B1", "Q44F1", "Q44I1", "age_min_cigarette", "cigarette", "drogues_dures")
+
+
+# On s'assure que les variables sont des facteurs
+data_univar <- data_univar %>%
+  mutate(across(all_of(cat_vars), as.factor),
+         Q03 = as.factor(Q03))
+
+# Boucle pour le test du Chi²
+for (var in cat_vars) {
+  # Créer la table de contingence
+  tab <- table(data_univar[[var]], data_univar$Q03)
+  
+  # Test du Chi²
+  chi_result <- chisq.test(tab)
+  
+  # Affichage des résultats
+  cat("\n-------------------------\n")
+  cat("Variable :", var, "\n")
+  print(tab)
+  cat("\nRésultat du test du Chi² :\n")
+  print(chi_result)
+}
